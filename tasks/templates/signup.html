@@ -1,0 +1,7 @@
+<h1> Inicio de Sesion <h1>
+
+<form action="/signup/" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button> Signup</button>
+</form>
