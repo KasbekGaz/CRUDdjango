@@ -22,7 +22,7 @@ def signup(request):
                 login(request, user)
                 return redirect('Tareas') #nombre de la url es decir el name  path('tasks/', views.tasks, name='Tareas')
                 #Se le pone el return para indicar que ahi tiene que terminar.
-            except IntegrityError:
+            except IntegrityError: #para traer un dato en especifico de la base de datos y agregar un error.
                 return render(request, 'signup.html', {
                     'form': UserCreationForm,
                     'error': 'Usuario ya existe'
