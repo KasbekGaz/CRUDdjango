@@ -2,8 +2,8 @@
 
 {% block content %}
 <h1>Signin conchetumare</h1>
-
-<form action="/signin" method="POST">
+<!– El error estaba en que debe de ponerse en action la url entra dos "/" slashs –>
+<form action="/signin/" method="POST">
     {% csrf_token %}
     {{form}}
     <button> Signin </button>

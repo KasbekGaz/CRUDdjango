@@ -48,11 +48,11 @@ def autenticar(request):
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'signin.html',{
-                'form': AuthenticationForm,
-                'error': 'Usuario o contraseña incorrecta'
-            })
-        
-        return render(request, 'signin.html', {
+                return render(request, 'signin.html',{
+                    'form': AuthenticationForm,
+                    'error': 'Usuario o contraseña incorrecta'
+                })
+            
+        return render(request, 'tasks.html', {
             'form': AuthenticationForm
         })
