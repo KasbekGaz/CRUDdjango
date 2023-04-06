@@ -2,3 +2,4 @@
 *.txt
 #Ignora archivos cache
 __pycache__
+__pycache__/

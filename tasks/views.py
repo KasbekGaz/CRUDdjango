@@ -47,12 +47,16 @@ def autenticar(request):
     
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is None:
+        if user is None: #Si el usuario no existe
                 return render(request, 'signin.html',{
                     'form': AuthenticationForm,
                     'error': 'Usuario o contraseña incorrecta'
                 })
-            
-        return render(request, 'tasks.html', {
-            'form': AuthenticationForm
-        })
+        else: #si SI existe lo reenvia a TASKS
+            login(request, user)
+            return redirect('Tareas')   
+""" Esto ya no es necesario
+    return render(request, 'signin.html', {
+        'form': AuthenticationForm
+    })
+"""
