@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> Creador de Tareas </h1>
+    <form action="/tasks/create/" method="POST">
+
+        {% csrf_token %}
+
+        {{form.as_p}} 
+
+        <button> Guradar </button>
+
+
+    </form>
+
+{% endblock%}

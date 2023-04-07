@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from .forms import TaskForm  #importamos el modelo de forms para tareas
 # Create your views here.
 
 def home(request):
@@ -34,6 +35,17 @@ def signup(request):
     
 def tasks(request):
     return render(request, 'tasks.html')
+
+def crear_task(request):       #Aqui esta donde va el formulario crear tareas
+    if request.method == 'GET':
+        return render(request, 'create_task.html',{
+            'form': TaskForm #aqui esta la funcion de forms.py
+        })
+    else:
+        print(request.POST)
+        return render(request, 'create_task.html',{
+            'form': TaskForm #aqui esta la funcion de forms.py
+        })
 
 def closeSesion(request):
     logout(request)
