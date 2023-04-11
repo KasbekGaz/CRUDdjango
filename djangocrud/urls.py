@@ -23,6 +23,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('tasks/', views.tasks, name='Tareas'), #vista de tareas
     path('tasks/create/', views.crear_task, name='crear_tareas'), #vista crear tareas
+    path('tasks/<int:tarea_id>/', views.task_detalles, name='detalle_tareas'), #le agregamos un dato dinamico aqui y en views.py
     path('logout/', views.closeSesion, name='Cerrar Sesion'),
     path('signin/', views.autenticar, name='Signin')
 

@@ -12,10 +12,14 @@
         <ul>
             <li> 
                 <a href="/">Home</a>
+                {% if user.is_authenticated %}
             </li>            <li> 
                 <a href="/tasks">Tasks</a>
-            </li>               
-            {% if user.is_authenticated %}
+            </li> 
+            <li> 
+                <a href="/tasks/create">Crear Tarea</a>
+            </li>            
+
             <li> 
                 <a href="/logout">Logout</a>
             </li>
