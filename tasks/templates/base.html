@@ -13,22 +13,25 @@
             <li> 
                 <a href="/">Home</a>
                 {% if user.is_authenticated %}
-            </li>            <li> 
-                <a href="/tasks">Tasks</a>
-            </li> 
+            </li>            
+            <li> 
+                <a href="{% url 'Tareas' %}">Tareas Pendientes</a>
+            </li>
+            <li> 
+                <a href="/tasks_completed">Tareas Completadas</a>
+            </li>  
             <li> 
                 <a href="/tasks/create">Crear Tarea</a>
             </li>            
-
             <li> 
-                <a href="/logout">Logout</a>
+                <a href="/logout">Cerrar Sesion</a>
             </li>
             {% else %}
             <li> 
-                <a href="/signup">Signup</a>
+                <a href="/signup">Registrarse</a>
             </li>
             <li> 
-                <a href="/signin">Signin</a>
+                <a href="/signin">Iniciar sesión</a>
             </li>
             {% endif %}
         </ul>

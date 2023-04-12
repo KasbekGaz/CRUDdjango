@@ -5,7 +5,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import TaskForm  #importamos el modelo de forms para tareas
 from .models import Task #importamos el modelo de tareas para consultarlas y listarlas.
-
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required #proteger la sesion y rutas
 # Create your views here.
 
 def home(request):
@@ -35,12 +36,21 @@ def signup(request):
                     'error': 'Contraseña no existen.'
                  })
     
+@login_required   
 def tasks(request): #aqui se listan las tareas para hacer una consulta.
     tasks = Task.objects.filter(user = request.user, Fcompletado__isnull = True) #para ver la consulta de tareas solo del usuario logeado
     #tasks = Task.objects.all() #devuelve todas las tareas de la base de datos.
     return render(request, 'tasks.html', {'tasks':tasks})
 
-def crear_task(request):       #Aqui esta donde va el formulario crear tareas
+@login_required
+def tasks_completed(request): #Tareas marcadas como completadas
+    tasks = Task.objects.filter(user = request.user, Fcompletado__isnull = False).order_by('-Fcompletado') #La ponemos como falsa
+    #Para que podamos listar las que en ese campo no estan marcadas como completadas.
+    #le ponemos el order_by para ordenarlo por fecha
+    return render(request, 'tasks.html', {'tasks':tasks})
+
+@login_required
+def crear_task(request):   #Aqui esta donde va el formulario crear tareas
     if request.method == 'GET':
         return render(request, 'create_task.html',{
             'form': TaskForm #aqui esta la funcion de forms.py
@@ -64,19 +74,50 @@ def crear_task(request):       #Aqui esta donde va el formulario crear tareas
                 'error': 'Porfavor verifique sus datos e intente de nuevo.'
             })
 
+@login_required
 def task_detalles(request, tarea_id):   #agregamos el dato dinamico que pusimos en urls
-    tarea = get_object_or_404(Task, pk=tarea_id) #pasamos el modelo de consulta
-    #tarea = Task.objects.get(pk=tarea_id)
-    # print(tarea_id)  #lo imprimimos
-    return render(request, 'tasks_detalles.html', {'task': tarea})
+    if request.method == 'GET':
+        tarea = get_object_or_404(Task, pk=tarea_id, user=request.user) #pasamos el modelo de consulta
+        #Agregamos lo siguiente para poder pasar un formulario y actualizar datos
+        form = TaskForm(instance=tarea)
+        return render(request, 'tasks_detalles.html', {
+            'task': tarea,
+            'form': form
+            })
+    else:
+        try:
+            tarea = get_object_or_404(Task, pk=tarea_id, user=request.user)
+            form = TaskForm(request.POST, instance=tarea)
+            form.save()
+            return redirect('Tareas')
+        except ValueError:
+            return render(request, 'tasks_detalles.html', {
+            'task': tarea,
+            'form': form,
+            'error': 'Error al actuzalizar los datos.'
+            })
 
+@login_required
+def complete_task(request, tarea_id): #Tarea completada
+    tarea = get_object_or_404(Task, pk=tarea_id, user=request.user)
+    if request.method == 'POST':
+        tarea.Fcompletado = timezone.now()
+        tarea.save()
+        return redirect('Tareas')
 
+@login_required    
+def delete_task(request, tarea_id): #Eliminar tarea
+    tarea = get_object_or_404(Task, pk=tarea_id, user=request.user)
+    if request.method == 'POST':
+        tarea.delete()
+        return redirect('Tareas')
 
-def closeSesion(request):
+@login_required
+def closeSesion(request): #cerrar sesion de usuario
     logout(request)
     return redirect('home')
 
-def autenticar(request):
+def autenticar(request):# autenticar un usuario
     if request.method == 'GET':
         return render(request, 'signin.html', {
             'form': AuthenticationForm
@@ -92,6 +133,7 @@ def autenticar(request):
         else: #si SI existe lo reenvia a TASKS
             login(request, user)
             return redirect('Tareas')   
+        
     #Esto ya no es necesario
     #return render(request, 'signin.html', {
     #    'form': AuthenticationForm

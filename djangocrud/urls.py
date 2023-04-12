@@ -22,8 +22,11 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('signup/', views.signup, name='signup'),
     path('tasks/', views.tasks, name='Tareas'), #vista de tareas
+    path('tasks_completed', views.tasks_completed, name='tasks_completed'), #vista de tareas completadas
     path('tasks/create/', views.crear_task, name='crear_tareas'), #vista crear tareas
     path('tasks/<int:tarea_id>/', views.task_detalles, name='detalle_tareas'), #le agregamos un dato dinamico aqui y en views.py
+    path('tasks/<int:tarea_id>/complete', views.complete_task, name='complete_task'), #agregamos la seccion de copmletado
+    path('tasks/<int:tarea_id>/delete', views.delete_task, name='delete_task'), #agregamos la opcion de eliminar la tarea
     path('logout/', views.closeSesion, name='Cerrar Sesion'),
     path('signin/', views.autenticar, name='Signin')
 

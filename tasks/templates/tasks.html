@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<h1> Tareas </h1>
+<h1> Tareas Pendientes </h1>
     <ul>
         {% for task in tasks %}
         <li> 
@@ -14,6 +14,7 @@
             {% endif %}
             <p>{{task.descripcion}}</p>
             <p>{{task.user.username}}</p>
+            <p>{{task.Fcompletado|date:'M j Y:i'}}</p>
             </a>
         </li>
 
