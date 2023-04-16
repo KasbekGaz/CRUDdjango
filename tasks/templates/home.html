@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1> Home </h1>
-<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit sequi inventore saepe nemo animi perferendis deleniti, quaerat cum? Earum rerum possimus sit tempora qui cupiditate quae in quisquam atque nostrum.w 
-    by Oswaldo Lazaro Flores
-</p>
+<main class="container py-5">
+    <section class="card card-body">
+        <h1 class="display-1 text-center"> Django App Tareas </h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis rem quidem soluta voluptatibus nihil, repudiandae temporibus aspernatur iure rerum iste culpa deleniti aliquid hic, ut blanditiis at a nulla impedit. Oswaldo Lazaro Flores
+        </p>
+        <div class="text-center">
+            <a class="btn btn-secundary" href="/signin/">
+            Iniciar Sesion
+            </a>
+            <a class="btn btn-dark" href="/signup/">
+            Resgistrarse
+            </a >
+        </div>
+    
+    </section>
+
+</main>
 {% endblock %}
 
 
